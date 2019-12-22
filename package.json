@@ -1,0 +1,26 @@
+{
+  "name": "analytics-backend",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "malcodeman",
+  "scripts": {
+    "start": "nodemon --require dotenv/config -r esm src/server.js"
+  },
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.5.8",
+    "mysql2": "^2.0.2",
+    "sequelize": "^5.21.3"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malcodeman/analytics-backend.git"
+  }
+}
