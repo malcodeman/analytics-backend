@@ -15,6 +15,15 @@ const rootValue = {
 
     await cache.set(`temporary-signup-code:${user.dataValues.email}`, id);
 
+    const message = {
+      to: email,
+      from: "notify@mail.analytics.com",
+      subject: `Your Signup Code is ${id}`,
+      text: `Copy and paste this temporary signup code: ${id}`
+    };
+
+    util.mail.send(message);
+
     return user.dataValues;
   },
   login: async args => {
@@ -22,6 +31,8 @@ const rootValue = {
     const loginCode = await cache.get(`temporary-signup-code:${email}`);
 
     if (password === loginCode) {
+      await usersDAL.updateByEmail(email, { isVerified: true });
+
       return await usersDAL.findByEmail(email);
     }
   }

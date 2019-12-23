@@ -32,9 +32,23 @@ export async function findById(id) {
   return user;
 }
 
+export async function updateByEmail(email, values) {
+  const user = await User.update(
+    { ...values },
+    {
+      where: {
+        email
+      }
+    }
+  );
+
+  return user;
+}
+
 export default {
   create,
   findAll,
   findByEmail,
-  findById
+  findById,
+  updateByEmail
 };
