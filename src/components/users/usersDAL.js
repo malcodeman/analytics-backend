@@ -11,3 +11,30 @@ export async function findAll() {
 
   return users;
 }
+
+export async function findByEmail(email) {
+  const user = await User.findOne({
+    where: {
+      email
+    }
+  });
+
+  return user;
+}
+
+export async function findById(id) {
+  const user = await User.findOne({
+    where: {
+      id
+    }
+  });
+
+  return user;
+}
+
+export default {
+  create,
+  findAll,
+  findByEmail,
+  findById
+};

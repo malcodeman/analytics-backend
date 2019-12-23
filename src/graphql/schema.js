@@ -13,6 +13,7 @@ const schema = buildSchema(`
   },
   type Mutation {
     signup(email: String): User
+    login(email: String, password: String): User
   }
 `);
 
