@@ -7,6 +7,7 @@ const schema = buildSchema(`
     isVerified: Boolean,
     createdAt: String,
     updatedAt: String,
+    token: String
   },
   type Query {
     findAllUsers: [User]

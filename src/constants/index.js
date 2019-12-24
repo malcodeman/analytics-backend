@@ -4,8 +4,10 @@ const {
   DB_PASSWORD,
   NODE_ENV,
   PORT,
-  SENDGRID_API_KEY
+  SENDGRID_API_KEY,
+  PRIVATE_KEY
 } = process.env;
+const EXPIRES_IN = "30 days";
 
 export const DB = {
   NAME: DB_NAME,
@@ -13,4 +15,4 @@ export const DB = {
   PASSWORD: DB_PASSWORD
 };
 
-export { NODE_ENV, PORT, SENDGRID_API_KEY };
+export { NODE_ENV, PORT, SENDGRID_API_KEY, PRIVATE_KEY, EXPIRES_IN };
