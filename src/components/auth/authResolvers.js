@@ -20,14 +20,7 @@ async function signup(email) {
 
   util.mail.send(message);
 
-  const payload = { id: user.id };
-  const token = util.jwt.sign(payload);
-  const response = {
-    ...user.dataValues,
-    token
-  };
-
-  return response;
+  return user.dataValues;
 }
 
 async function login(email, password) {
@@ -36,7 +29,15 @@ async function login(email, password) {
   if (password === loginCode) {
     await usersDAL.updateByEmail(email, { isVerified: true });
 
-    return await usersDAL.findByEmail(email);
+    const user = await usersDAL.findByEmail(email);
+    const payload = { id: user.id };
+    const token = util.jwt.sign(payload);
+    const response = {
+      ...user.dataValues,
+      token
+    };
+
+    return response;
   }
 }
 
