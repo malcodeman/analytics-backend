@@ -11,6 +11,15 @@ const User = sequelize.define("user", {
       notEmpty: true
     }
   },
+  firstName: {
+    type: STRING
+  },
+  lastName: {
+    type: STRING
+  },
+  company: {
+    type: STRING
+  },
   isVerified: {
     type: BOOLEAN,
     allowNull: false,

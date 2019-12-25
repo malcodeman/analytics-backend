@@ -45,10 +45,24 @@ export async function updateByEmail(email, values) {
   return user;
 }
 
+export async function updateById(id, values) {
+  const user = await User.update(
+    { ...values },
+    {
+      where: {
+        id
+      }
+    }
+  );
+
+  return user;
+}
+
 export default {
   create,
   findAll,
   findByEmail,
   findById,
-  updateByEmail
+  updateByEmail,
+  updateById
 };

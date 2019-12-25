@@ -11,7 +11,7 @@ function sign(payload) {
 }
 
 function verify(token) {
-  const decoded = jwt.verify(token, PRIVATE_KEY);
+  const decoded = jsonwebtoken.verify(token, PRIVATE_KEY);
 
   return decoded;
 }
