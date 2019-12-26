@@ -10,7 +10,10 @@ const typeDefs = gql`
     isVerified: Boolean
     createdAt: String
     updatedAt: String
+  }
+  type Login {
     token: String
+    user: User
   }
   type Query {
     findAllUsers: [User]
@@ -18,7 +21,7 @@ const typeDefs = gql`
   }
   type Mutation {
     signup(email: String): User
-    login(email: String, password: String): User
+    login(email: String, password: String): Login
     updateUser(firstName: String, lastName: String, company: String): User
   }
 `;

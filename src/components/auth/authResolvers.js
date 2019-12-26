@@ -46,7 +46,7 @@ async function login(email, password) {
     const payload = { id: user.id };
     const token = util.jwt.sign(payload);
     const response = {
-      ...user.dataValues,
+      user,
       token
     };
 
