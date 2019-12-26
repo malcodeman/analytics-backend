@@ -5,6 +5,11 @@ const resolvers = {
   Query: {
     findAllUsers() {
       return usersDAL.findAll();
+    },
+    findMyself(parent, args, context) {
+      const userId = context.user.id;
+
+      return usersDAL.findById(userId);
     }
   },
   Mutation: {

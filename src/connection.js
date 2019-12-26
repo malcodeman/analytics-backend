@@ -14,7 +14,7 @@ const sequelize = new Sequelize(DB.NAME, DB.USER, DB.PASSWORD, {
   }
 });
 
-sequelize.sync({ force: true });
+sequelize.sync({ force: false });
 
 async function authenticate() {
   await sequelize.authenticate();

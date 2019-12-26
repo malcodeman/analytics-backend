@@ -14,6 +14,7 @@ const typeDefs = gql`
   }
   type Query {
     findAllUsers: [User]
+    findMyself: User
   }
   type Mutation {
     signup(email: String): User
