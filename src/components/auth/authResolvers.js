@@ -5,11 +5,10 @@ import util from "../../util";
 import cache from "../../cache";
 import { PRIVATE_KEY, EXPIRES_IN } from "../../constants";
 
-async function signup(email) {
-  const user = await usersDAL.create(email);
+async function sendSignupCode(email) {
   const signupCode = await util.generateId();
 
-  await cache.set(`temporary-signup-code:${user.dataValues.email}`, signupCode);
+  await cache.set(`temporary-signup-code:${email}`, signupCode);
 
   const message = {
     to: email,
@@ -19,8 +18,22 @@ async function signup(email) {
   };
 
   util.mail.send(message);
+}
 
-  return user.dataValues;
+async function signup(email) {
+  const user = await usersDAL.findByEmail(email);
+
+  if (user) {
+    sendSignupCode(user.email);
+
+    return user;
+  }
+
+  const newUser = await usersDAL.create(email);
+
+  sendSignupCode(newUser.email);
+
+  return newUser;
 }
 
 async function login(email, password) {
