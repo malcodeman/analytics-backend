@@ -1,6 +1,7 @@
 import { STRING, BOOLEAN } from "sequelize";
 
 import sequelize from "../../connection";
+import Site from "../sites/sitesModel";
 
 const User = sequelize.define("user", {
   email: {
@@ -29,5 +30,7 @@ const User = sequelize.define("user", {
     }
   }
 });
+
+User.hasMany(Site);
 
 export default User;

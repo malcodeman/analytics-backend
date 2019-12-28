@@ -15,6 +15,9 @@ const typeDefs = gql`
     token: String
     user: User
   }
+  type Site {
+    name: String
+  }
   type Query {
     findAllUsers: [User]
     findMyself: User
@@ -23,6 +26,7 @@ const typeDefs = gql`
     signup(email: String): User
     login(email: String, password: String): Login
     updateUser(firstName: String, lastName: String, company: String): User
+    addSite(name: String): Site
   }
 `;
 
