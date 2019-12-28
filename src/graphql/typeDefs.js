@@ -18,9 +18,13 @@ const typeDefs = gql`
   type Site {
     name: String
   }
+  type FindMySitesResponse {
+    sites: [Site]
+  }
   type Query {
     findAllUsers: [User]
     findMyself: User
+    findMySites: FindMySitesResponse
   }
   type Mutation {
     signup(email: String): User

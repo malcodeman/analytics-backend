@@ -1,4 +1,5 @@
 import User from "./usersModel";
+import Site from "../sites/sitesModel";
 
 export async function create(email) {
   const user = await User.create({ email });
@@ -58,11 +59,27 @@ export async function updateById(id, values) {
   return user;
 }
 
+export async function findSites(id) {
+  const user = await User.findOne({
+    where: {
+      id
+    },
+    include: [
+      {
+        model: Site
+      }
+    ]
+  });
+
+  return user;
+}
+
 export default {
   create,
   findAll,
   findByEmail,
   findById,
   updateByEmail,
-  updateById
+  updateById,
+  findSites
 };

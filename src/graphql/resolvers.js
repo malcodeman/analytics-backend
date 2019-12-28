@@ -11,6 +11,11 @@ const resolvers = {
       const userId = context.user.id;
 
       return usersDAL.findById(userId);
+    },
+    findMySites(parent, args, context) {
+      const userId = context.user.id;
+
+      return usersDAL.findSites(userId);
     }
   },
   Mutation: {
