@@ -16,7 +16,9 @@ const typeDefs = gql`
     user: User
   }
   type Site {
+    id: Int
     name: String
+    siteId: String
   }
   type FindMySitesResponse {
     sites: [Site]

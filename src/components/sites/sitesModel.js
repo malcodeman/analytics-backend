@@ -9,6 +9,14 @@ const Site = sequelize.define("site", {
     validate: {
       notEmpty: true
     }
+  },
+  siteId: {
+    type: STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 });
 

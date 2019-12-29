@@ -1,7 +1,7 @@
 import Site from "./sitesModel";
 
-export async function create(name, userId) {
-  const site = await Site.create({ name, userId });
+export async function create(name, siteId, userId) {
+  const site = await Site.create({ name, siteId, userId });
 
   return site;
 }

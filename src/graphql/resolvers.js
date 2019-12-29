@@ -1,6 +1,6 @@
 import usersDAL from "../components/users/usersDAL";
 import authResolvers from "../components/auth/authResolvers";
-import sitesDAL from "../components/sites/sitesDAL";
+import sitesResolvers from "../components/sites/sitesResolvers";
 
 const resolvers = {
   Query: {
@@ -38,10 +38,7 @@ const resolvers = {
       return usersDAL.findById(userId);
     },
     addSite(parent, args, context) {
-      const userId = context.user.id;
-      const { name } = args;
-
-      return sitesDAL.create(name, userId);
+      return sitesResolvers.addSite(args.name, context.user.id);
     }
   }
 };
