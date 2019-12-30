@@ -33,6 +33,7 @@ const typeDefs = gql`
     login(email: String, password: String): Login
     updateUser(firstName: String, lastName: String, company: String): User
     addSite(name: String): Site
+    destroySite(siteId: Int): Boolean
   }
 `;
 

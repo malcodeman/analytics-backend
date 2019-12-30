@@ -7,6 +7,11 @@ async function addSite(name, userId) {
   return await sitesDAL.create(name, siteId, userId);
 }
 
+async function destroySite(siteId) {
+  return await sitesDAL.destroy(siteId);
+}
+
 export default {
-  addSite
+  addSite,
+  destroySite
 };

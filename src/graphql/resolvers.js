@@ -39,6 +39,9 @@ const resolvers = {
     },
     addSite(parent, args, context) {
       return sitesResolvers.addSite(args.name, context.user.id);
+    },
+    destroySite(parent, args) {
+      return sitesResolvers.destroySite(args.siteId);
     }
   }
 };

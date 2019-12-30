@@ -12,7 +12,18 @@ export async function findAll() {
   return sites;
 }
 
+export async function destroy(id) {
+  const site = await Site.destroy({
+    where: {
+      id
+    }
+  });
+
+  return site;
+}
+
 export default {
   create,
-  findAll
+  findAll,
+  destroy
 };
