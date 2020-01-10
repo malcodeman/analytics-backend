@@ -21,7 +21,7 @@ const server = new ApolloServer({
       return { user };
     }
 
-    return { user: null };
+    return { user: { id: null } };
   }
 });
 

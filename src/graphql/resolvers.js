@@ -1,3 +1,5 @@
+import { AuthenticationError } from "apollo-server";
+
 import usersDAL from "../components/users/usersDAL";
 import authResolvers from "../components/auth/authResolvers";
 import sitesResolvers from "../components/sites/sitesResolvers";
@@ -10,11 +12,17 @@ const resolvers = {
     findMyself(parent, args, context) {
       const userId = context.user.id;
 
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
       return usersDAL.findById(userId);
     },
     findMySites(parent, args, context) {
       const userId = context.user.id;
 
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
       return usersDAL.findSites(userId);
     }
   },
@@ -27,6 +35,11 @@ const resolvers = {
     },
     async updateUser(parent, args, context) {
       const userId = context.user.id;
+
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
+
       const { firstName, lastName, company } = args;
       const values = {
         firstName,
