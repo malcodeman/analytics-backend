@@ -16,3 +16,11 @@ export const DB = {
 };
 
 export { NODE_ENV, PORT, SENDGRID_API_KEY, PRIVATE_KEY, EXPIRES_IN };
+
+export default {
+  NODE_ENV,
+  PORT,
+  SENDGRID_API_KEY,
+  PRIVATE_KEY,
+  EXPIRES_IN
+};
