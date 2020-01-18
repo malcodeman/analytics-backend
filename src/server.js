@@ -1,9 +1,9 @@
 import app from "./app";
-import { PORT } from "./constants";
+import constants from "./constants";
 
 async function start() {
   try {
-    await app.listen(PORT);
+    await app.listen(constants.PORT);
   } catch (err) {
     app.log.error(err);
     process.exit(1);

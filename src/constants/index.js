@@ -1,26 +1,17 @@
 const {
-  DB_NAME,
-  DB_USER,
-  DB_PASSWORD,
   NODE_ENV,
   PORT,
   SENDGRID_API_KEY,
-  PRIVATE_KEY
+  PRIVATE_KEY,
+  MONGODB_URI
 } = process.env;
 const EXPIRES_IN = "30 days";
-
-export const DB = {
-  NAME: DB_NAME,
-  USER: DB_USER,
-  PASSWORD: DB_PASSWORD
-};
-
-export { NODE_ENV, PORT, SENDGRID_API_KEY, PRIVATE_KEY, EXPIRES_IN };
 
 export default {
   NODE_ENV,
   PORT,
   SENDGRID_API_KEY,
   PRIVATE_KEY,
-  EXPIRES_IN
+  EXPIRES_IN,
+  MONGODB_URI
 };

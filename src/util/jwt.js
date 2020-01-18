@@ -1,9 +1,9 @@
 import jsonwebtoken from "jsonwebtoken";
 
-import { PRIVATE_KEY, EXPIRES_IN } from "../constants";
+import constants from "../constants";
 
 function sign(payload) {
-  const token = jsonwebtoken.sign(payload, PRIVATE_KEY, {
+  const token = jsonwebtoken.sign(payload, constants.PRIVATE_KEY, {
     expiresIn: EXPIRES_IN
   });
 
@@ -11,7 +11,7 @@ function sign(payload) {
 }
 
 function verify(token) {
-  const decoded = jsonwebtoken.verify(token, PRIVATE_KEY);
+  const decoded = jsonwebtoken.verify(token, constants.PRIVATE_KEY);
 
   return decoded;
 }

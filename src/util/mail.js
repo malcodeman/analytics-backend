@@ -1,8 +1,8 @@
 import mail from "@sendgrid/mail";
 
-import { SENDGRID_API_KEY } from "../constants";
+import constants from "../constants";
 
-mail.setApiKey(SENDGRID_API_KEY);
+mail.setApiKey(constants.SENDGRID_API_KEY);
 
 function send(message) {
   mail.send(message);

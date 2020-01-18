@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
+import { AuthenticationError } from "apollo-server";
 
 import usersDAL from "../users/usersDAL";
 import util from "../../util";
 import cache from "../../cache";
-import { PRIVATE_KEY, EXPIRES_IN } from "../../constants";
 
 async function sendSignupCode(email) {
   const signupCode = await util.generateId();
@@ -39,19 +39,21 @@ async function signup(email) {
 async function login(email, password) {
   const loginCode = await cache.get(`temporary-signup-code:${email}`);
 
-  if (password === loginCode) {
-    await usersDAL.updateByEmail(email, { isVerified: true });
-
-    const user = await usersDAL.findByEmail(email);
-    const payload = { id: user.id };
-    const token = util.jwt.sign(payload);
-    const response = {
-      user,
-      token
-    };
-
-    return response;
+  if (password !== loginCode) {
+    throw new AuthenticationError("Invalid password");
   }
+
+  await usersDAL.updateByEmail(email, { isVerified: true });
+
+  const user = await usersDAL.findByEmail(email);
+  const payload = { id: user.id };
+  const token = util.jwt.sign(payload);
+  const response = {
+    user,
+    token
+  };
+
+  return response;
 }
 
 export default {

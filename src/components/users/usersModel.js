@@ -1,36 +1,40 @@
-import { STRING, BOOLEAN } from "sequelize";
+import mongoose from "mongoose";
 
-import sequelize from "../../connection";
-import Site from "../sites/sitesModel";
+const schema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true
+    },
+    firstName: {
+      type: String
+    },
+    lastName: {
+      type: String
+    },
+    company: {
+      type: String
+    },
+    isVerified: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    sites: [
+      {
+        name: {
+          type: String,
+          required: true
+        },
+        siteId: {
+          type: String,
+          required: true
+        }
+      }
+    ]
+  },
+  { timestamps: true }
+);
+const user = mongoose.model("User", schema);
 
-const User = sequelize.define("user", {
-  email: {
-    type: STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
-  },
-  firstName: {
-    type: STRING
-  },
-  lastName: {
-    type: STRING
-  },
-  company: {
-    type: STRING
-  },
-  isVerified: {
-    type: BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-    validate: {
-      notEmpty: true
-    }
-  }
-});
-
-User.hasMany(Site);
-
-export default User;
+export default user;

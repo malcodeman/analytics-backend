@@ -1,14 +1,18 @@
 import { ApolloServer } from "apollo-server";
+import mongoose from "mongoose";
 
-import { NODE_ENV } from "./constants";
+import constants from "./constants";
 import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
 import util from "./util";
 
+mongoose.connect(constants.MONGODB_URI, { useNewUrlParser: true });
+mongoose.set("useFindAndModify", false);
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  playground: NODE_ENV === "development",
+  playground: constants.NODE_ENV === "development",
   context: ({ req }) => {
     const token = req.headers.authorization || "";
 
