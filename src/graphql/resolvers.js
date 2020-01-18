@@ -1,8 +1,8 @@
-import { AuthenticationError } from "apollo-server";
+import { AuthenticationError, UserInputError } from "apollo-server";
 
 import usersDAL from "../components/users/usersDAL";
 import authResolvers from "../components/auth/authResolvers";
-import sitesResolvers from "../components/sites/sitesResolvers";
+import util from "../util";
 
 const resolvers = {
   Query: {
@@ -15,6 +15,7 @@ const resolvers = {
       if (!userId) {
         throw new AuthenticationError("Invalid JWT");
       }
+
       return usersDAL.findById(userId);
     },
     findMySites(parent, args, context) {
@@ -23,6 +24,7 @@ const resolvers = {
       if (!userId) {
         throw new AuthenticationError("Invalid JWT");
       }
+
       return usersDAL.findSites(userId);
     }
   },
@@ -48,13 +50,34 @@ const resolvers = {
       };
 
       await usersDAL.updateById(userId, values);
+
       return usersDAL.findById(userId);
     },
-    addSite(parent, args, context) {
-      return sitesResolvers.addSite(args.name, context.user.id);
+    async addSite(parent, args, context) {
+      const userId = context.user.id;
+
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
+
+      const siteId = await util.generateId();
+
+      return usersDAL.addSite(userId, args.name, siteId);
     },
-    destroySite(parent, args) {
-      return sitesResolvers.destroySite(args.siteId);
+    async destroySite(parent, args, context) {
+      const userId = context.user.id;
+
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
+      const siteId = args.siteId;
+      const sites = await usersDAL.findSites(userId);
+
+      if (!sites.find(site => site.siteId === siteId)) {
+        throw new UserInputError("Invalid siteId");
+      }
+
+      return Boolean(await usersDAL.destroySite(userId, siteId));
     }
   }
 };
