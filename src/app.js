@@ -1,13 +1,10 @@
 import { ApolloServer } from "apollo-server";
-import mongoose from "mongoose";
 
 import constants from "./constants";
 import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
 import util from "./util";
-
-mongoose.connect(constants.MONGODB_URI, { useNewUrlParser: true });
-mongoose.set("useFindAndModify", false);
+import "./db";
 
 const server = new ApolloServer({
   typeDefs,

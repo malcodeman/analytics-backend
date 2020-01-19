@@ -6,9 +6,9 @@ import logger from "../util/logger";
 const client = redis.createClient();
 const get = promisify(client.get).bind(client);
 
-client.on("error", error);
+client.on("error", onError);
 
-function error(error) {
+function onError(error) {
   logger.log(error, logger.LEVELS.ERROR);
 }
 
