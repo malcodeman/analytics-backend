@@ -10,6 +10,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   playground: constants.NODE_ENV === "development",
+  tracing: constants.NODE_ENV === "development",
   context: ({ req }) => {
     const token = req.headers.authorization || "";
 
