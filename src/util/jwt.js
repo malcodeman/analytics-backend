@@ -4,7 +4,7 @@ import constants from "../constants";
 
 function sign(payload) {
   const token = jsonwebtoken.sign(payload, constants.PRIVATE_KEY, {
-    expiresIn: EXPIRES_IN
+    expiresIn: constants.EXPIRES_IN
   });
 
   return token;
