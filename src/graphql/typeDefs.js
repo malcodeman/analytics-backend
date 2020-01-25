@@ -19,10 +19,25 @@ const typeDefs = gql`
     name: String
     siteId: String
   }
+  type Session {
+    id: String
+    siteId: String
+    language: String
+    userAgent: String
+    createdAt: String
+  }
+  type Dashboard {
+    siteId: String
+    pageViews: Int
+    referrers: [String]
+  }
   type Query {
     findAllUsers: [User]
     findMyself: User
     findMySites: [Site]
+    findAllSessions: [Session]
+    findSite(siteId: String): Site
+    findDashboard(siteId: String): Dashboard
   }
   type Mutation {
     signup(email: String): User
@@ -30,6 +45,7 @@ const typeDefs = gql`
     updateUser(firstName: String, lastName: String, company: String): User
     addSite(name: String): Site
     destroySite(siteId: String): Boolean
+    addSession(siteId: String, language: String, userAgent: String): Session
   }
 `;
 

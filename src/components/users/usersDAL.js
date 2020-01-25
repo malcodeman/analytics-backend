@@ -57,10 +57,16 @@ export async function destroySite(id, siteId) {
   return user;
 }
 
-export async function findSites(id) {
-  const user = await User.findById(id, "sites");
+export async function findMySites(id) {
+  const user = await User.findById(id).select("sites");
 
   return user.sites;
+}
+
+export async function findSite(siteId) {
+  const user = await User.findOne({ "sites.siteId": siteId }).select("sites");
+
+  return user;
 }
 
 export default {
@@ -70,7 +76,8 @@ export default {
   findById,
   updateByEmail,
   updateById,
-  findSites,
+  findMySites,
   destroySite,
-  addSite
+  addSite,
+  findSite
 };
