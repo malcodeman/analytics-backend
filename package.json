@@ -6,7 +6,8 @@
   "author": "malcodeman",
   "scripts": {
     "start": "nodemon --require dotenv/config -r esm src/server.js",
-    "start-redis": "redis-server"
+    "start-redis": "redis-server",
+    "db:drop": "node --require dotenv/config -r esm src/cli/drop"
   },
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
