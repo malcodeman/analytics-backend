@@ -31,6 +31,7 @@ const typeDefs = gql`
     siteId: String
     pageViews: Int
     referrers: [String]
+    languages: [String]
   }
   type Query {
     findAllUsers: [User]
@@ -46,7 +47,12 @@ const typeDefs = gql`
     updateUser(firstName: String, lastName: String, company: String): User
     addSite(name: String): Site
     destroySite(siteId: String): Boolean
-    addSession(siteId: String, language: String, userAgent: String): Session
+    addSession(
+      siteId: String
+      language: String
+      userAgent: String
+      referrer: String
+    ): Session
   }
 `;
 
