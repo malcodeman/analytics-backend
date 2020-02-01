@@ -117,7 +117,7 @@ const resolvers = {
       return Boolean(await usersDAL.destroySite(userId, siteId));
     },
     async addSession(parent, args) {
-      const { siteId, language, userAgent } = args;
+      const { siteId, language, userAgent, referrer } = args;
       const user = await usersDAL.findSite(siteId);
 
       if (!user) {
@@ -127,7 +127,8 @@ const resolvers = {
       const data = {
         siteId,
         language,
-        userAgent
+        userAgent,
+        referrer
       };
 
       return sessionsDAL.create(data);

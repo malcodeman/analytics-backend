@@ -11,6 +11,9 @@ const schema = new mongoose.Schema(
     },
     userAgent: {
       type: String
+    },
+    referrer: {
+      type: String
     }
   },
   { timestamps: true }

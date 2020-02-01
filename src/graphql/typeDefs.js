@@ -24,6 +24,7 @@ const typeDefs = gql`
     siteId: String
     language: String
     userAgent: String
+    referrer: String
     createdAt: String
   }
   type Dashboard {
