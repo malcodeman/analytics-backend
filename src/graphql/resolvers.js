@@ -5,8 +5,10 @@ import authResolvers from "../components/auth/authResolvers";
 import sessionsDAL from "../components/sessions/sessionsDAL";
 import sessionsResolvers from "../components/sessions/resolvers";
 import util from "../util";
+import Date from "./scalars/Date"
 
 const resolvers = {
+  Date,
   Query: {
     findAllUsers() {
       return usersDAL.findAll();

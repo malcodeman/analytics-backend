@@ -1,6 +1,7 @@
 import { gql } from "apollo-server";
 
 const typeDefs = gql`
+  scalar Date
   type User {
     id: String
     email: String
@@ -8,7 +9,7 @@ const typeDefs = gql`
     lastName: String
     company: String
     isVerified: Boolean
-    createdAt: String
+    createdAt: Date
   }
   type Login {
     token: String
@@ -25,7 +26,7 @@ const typeDefs = gql`
     language: String
     userAgent: String
     referrer: String
-    createdAt: String
+    createdAt: Date
   }
   type Dashboard {
     siteId: String
