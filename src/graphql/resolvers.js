@@ -5,7 +5,7 @@ import authResolvers from "../components/auth/authResolvers";
 import sessionsDAL from "../components/sessions/sessionsDAL";
 import sessionsResolvers from "../components/sessions/resolvers";
 import util from "../util";
-import Date from "./scalars/Date"
+import Date from "./scalars/Date";
 
 const resolvers = {
   Date,
@@ -62,6 +62,26 @@ const resolvers = {
 
       const siteId = args.siteId;
       const data = await sessionsResolvers.aggregateData(siteId);
+
+      return data;
+    },
+    async findCharts(parent, args, context) {
+      const userId = context.user.id;
+
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
+
+      const user = await usersDAL.findMySites(userId);
+
+      if (!user) {
+        throw new UserInputError("Invalid siteId");
+      }
+
+      const siteId = args.siteId;
+      const from = args.from;
+      const to = args.to;
+      const data = await sessionsResolvers.findCharts(siteId, from, to);
 
       return data;
     }

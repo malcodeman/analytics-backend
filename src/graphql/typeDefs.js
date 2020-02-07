@@ -34,6 +34,10 @@ const typeDefs = gql`
     referrers: [String]
     languages: [String]
   }
+  type Chart {
+    pageViews: String
+    date: Date
+  }
   type Query {
     findAllUsers: [User]
     findMyself: User
@@ -41,6 +45,7 @@ const typeDefs = gql`
     findAllSessions: [Session]
     findSite(siteId: String): Site
     findDashboard(siteId: String): Dashboard
+    findCharts(siteId: String, from: String, to: String): [Chart]
   }
   type Mutation {
     signup(email: String): User

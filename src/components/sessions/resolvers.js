@@ -1,4 +1,5 @@
 import sessionsDAL from "./sessionsDAL";
+import Session from "./sessionsModel";
 
 async function aggregateData(siteId) {
   const sessions = await sessionsDAL.findBySiteId(siteId);
@@ -16,6 +17,33 @@ async function aggregateData(siteId) {
   return data;
 }
 
+async function findCharts(siteId, from, to) {
+  const sessions = await Session.aggregate([
+    {
+      $match: {
+        siteId,
+        createdAt: {
+          $gte: new Date(from),
+          $lt: new Date(to)
+        }
+      }
+    },
+    {
+      $group: {
+        _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+        pageViews: { $sum: 1 },
+        date: { $first: "$createdAt" }
+      }
+    },
+    {
+      $sort: { date: 1 }
+    }
+  ]);
+
+  return sessions;
+}
+
 export default {
-  aggregateData
+  aggregateData,
+  findCharts
 };
