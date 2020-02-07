@@ -43,7 +43,61 @@ async function findCharts(siteId, from, to) {
   return sessions;
 }
 
+async function findBrowsers(siteId, from, to) {
+  const sessions = await Session.aggregate([
+    {
+      $match: {
+        siteId,
+        createdAt: {
+          $gte: new Date(from),
+          $lt: new Date(to)
+        }
+      }
+    },
+    {
+      $group: {
+        _id: "$browser",
+        total: { $sum: 1 },
+        label: { $first: "$browser" }
+      }
+    },
+    {
+      $sort: { total: -1 }
+    }
+  ]);
+
+  return sessions;
+}
+
+async function findOs(siteId, from, to) {
+  const sessions = await Session.aggregate([
+    {
+      $match: {
+        siteId,
+        createdAt: {
+          $gte: new Date(from),
+          $lt: new Date(to)
+        }
+      }
+    },
+    {
+      $group: {
+        _id: "$os",
+        total: { $sum: 1 },
+        label: { $first: "$os" }
+      }
+    },
+    {
+      $sort: { total: -1 }
+    }
+  ]);
+
+  return sessions;
+}
+
 export default {
   aggregateData,
-  findCharts
+  findCharts,
+  findBrowsers,
+  findOs
 };

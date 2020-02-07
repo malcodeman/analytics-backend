@@ -1,9 +1,16 @@
+import parser from "ua-parser-js";
+
 import Session from "./sessionsModel";
 
 export async function create(data) {
-  const session = await Session.create(data);
+  const ua = parser(data.userAgent);
+  const session = {
+    ...data,
+    browser: ua.browser.name,
+    os: ua.os.name
+  };
 
-  return session;
+  return await Session.create(session);
 }
 
 export async function findAll() {

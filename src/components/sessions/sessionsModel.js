@@ -14,6 +14,12 @@ const schema = new mongoose.Schema(
     },
     referrer: {
       type: String
+    },
+    browser: {
+      type: String
+    },
+    os: {
+      type: String
     }
   },
   { timestamps: true }

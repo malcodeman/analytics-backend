@@ -84,6 +84,46 @@ const resolvers = {
       const data = await sessionsResolvers.findCharts(siteId, from, to);
 
       return data;
+    },
+    async findBrowsers(parent, args, context) {
+      const userId = context.user.id;
+
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
+
+      const user = await usersDAL.findMySites(userId);
+
+      if (!user) {
+        throw new UserInputError("Invalid siteId");
+      }
+
+      const siteId = args.siteId;
+      const from = args.from;
+      const to = args.to;
+      const data = await sessionsResolvers.findBrowsers(siteId, from, to);
+
+      return data;
+    },
+    async findOs(parent, args, context) {
+      const userId = context.user.id;
+
+      if (!userId) {
+        throw new AuthenticationError("Invalid JWT");
+      }
+
+      const user = await usersDAL.findMySites(userId);
+
+      if (!user) {
+        throw new UserInputError("Invalid siteId");
+      }
+
+      const siteId = args.siteId;
+      const from = args.from;
+      const to = args.to;
+      const data = await sessionsResolvers.findOs(siteId, from, to);
+
+      return data;
     }
   },
   Mutation: {

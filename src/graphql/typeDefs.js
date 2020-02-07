@@ -38,6 +38,10 @@ const typeDefs = gql`
     pageViews: String
     date: Date
   }
+  type UserAgentProp {
+    label: String
+    total: Int
+  }
   type Query {
     findAllUsers: [User]
     findMyself: User
@@ -46,6 +50,8 @@ const typeDefs = gql`
     findSite(siteId: String): Site
     findDashboard(siteId: String): Dashboard
     findCharts(siteId: String, from: String, to: String): [Chart]
+    findBrowsers(siteId: String, from: String, to: String): [UserAgentProp]
+    findOs(siteId: String, from: String, to: String): [UserAgentProp]
   }
   type Mutation {
     signup(email: String): User
