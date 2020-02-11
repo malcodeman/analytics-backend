@@ -1,7 +1,7 @@
 import User from "./usersModel";
 
-export async function create(email) {
-  const user = await User.create({ email });
+export async function create(values) {
+  const user = await User.create(values);
 
   return user;
 }
@@ -25,13 +25,13 @@ export async function findById(id) {
 }
 
 export async function updateByEmail(email, values) {
-  const user = await User.findOneAndUpdate({ email }, { ...values });
+  const user = await User.findOneAndUpdate({ email }, values, { new: true });
 
   return user;
 }
 
 export async function updateById(id, values) {
-  const user = await User.findByIdAndUpdate(id, { ...values });
+  const user = await User.findByIdAndUpdate(id, values, { new: true });
 
   return user;
 }
@@ -53,20 +53,9 @@ export async function destroySite(id, siteId) {
   const user = await User.findByIdAndUpdate(id, {
     $pull: { sites: { siteId } }
   });
+  const site = user.sites.find(site => site.siteId === siteId);
 
-  return user;
-}
-
-export async function findMySites(id) {
-  const user = await User.findById(id).select("sites");
-
-  return user.sites;
-}
-
-export async function findSite(siteId) {
-  const user = await User.findOne({ "sites.siteId": siteId }).select("sites");
-
-  return user;
+  return site;
 }
 
 export default {
@@ -76,8 +65,6 @@ export default {
   findById,
   updateByEmail,
   updateById,
-  findMySites,
   destroySite,
-  addSite,
-  findSite
+  addSite
 };
