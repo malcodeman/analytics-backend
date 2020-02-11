@@ -1,200 +1,43 @@
-import { AuthenticationError, UserInputError } from "apollo-server";
-
-import usersDAL from "../components/users/usersDAL";
-import authResolvers from "../components/auth/authResolvers";
-import sessionsDAL from "../components/sessions/sessionsDAL";
-import sessionsResolvers from "../components/sessions/resolvers";
-import util from "../util";
 import Date from "./scalars/Date";
+import {
+  findAllSessions,
+  findBrowsers,
+  findCharts,
+  findDashboard,
+  findOs
+} from "../components/sessions/sessionsQueries";
+import { addSession } from "../components/sessions/sessionsMutations";
+import {
+  findAllUsers,
+  findMySites,
+  findMyself
+} from "../components/users/usersQueries";
+import {
+  updateUser,
+  addSite,
+  destroySite
+} from "../components/users/usersMutations";
+import { signup, login } from "../components/auth/authMutations";
 
 const resolvers = {
   Date,
   Query: {
-    findAllUsers() {
-      return usersDAL.findAll();
-    },
-    findMyself(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      return usersDAL.findById(userId);
-    },
-    findMySites(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      return usersDAL.findMySites(userId);
-    },
-    findAllSessions() {
-      return sessionsDAL.findAll();
-    },
-    async findSite(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const siteId = args.siteId;
-      const user = await usersDAL.findSite(siteId);
-      const site = user.sites.find(site => site.siteId === siteId);
-
-      return site;
-    },
-    async findDashboard(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const user = await usersDAL.findMySites(userId);
-
-      if (!user) {
-        throw new UserInputError("Invalid siteId");
-      }
-
-      const siteId = args.siteId;
-      const data = await sessionsResolvers.aggregateData(siteId);
-
-      return data;
-    },
-    async findCharts(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const user = await usersDAL.findMySites(userId);
-
-      if (!user) {
-        throw new UserInputError("Invalid siteId");
-      }
-
-      const siteId = args.siteId;
-      const from = args.from;
-      const to = args.to;
-      const data = await sessionsResolvers.findCharts(siteId, from, to);
-
-      return data;
-    },
-    async findBrowsers(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const user = await usersDAL.findMySites(userId);
-
-      if (!user) {
-        throw new UserInputError("Invalid siteId");
-      }
-
-      const siteId = args.siteId;
-      const from = args.from;
-      const to = args.to;
-      const data = await sessionsResolvers.findBrowsers(siteId, from, to);
-
-      return data;
-    },
-    async findOs(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const user = await usersDAL.findMySites(userId);
-
-      if (!user) {
-        throw new UserInputError("Invalid siteId");
-      }
-
-      const siteId = args.siteId;
-      const from = args.from;
-      const to = args.to;
-      const data = await sessionsResolvers.findOs(siteId, from, to);
-
-      return data;
-    }
+    findAllSessions,
+    findBrowsers,
+    findCharts,
+    findDashboard,
+    findOs,
+    findAllUsers,
+    findMySites,
+    findMyself
   },
   Mutation: {
-    signup(parent, args) {
-      return authResolvers.signup(args.email);
-    },
-    login(parent, args) {
-      return authResolvers.login(args.email, args.password);
-    },
-    async updateUser(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const { firstName, lastName, company } = args;
-      const values = {
-        firstName,
-        lastName,
-        company
-      };
-
-      await usersDAL.updateById(userId, values);
-
-      return usersDAL.findById(userId);
-    },
-    async addSite(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const siteId = await util.generateId();
-
-      return usersDAL.addSite(userId, args.name, siteId);
-    },
-    async destroySite(parent, args, context) {
-      const userId = context.user.id;
-
-      if (!userId) {
-        throw new AuthenticationError("Invalid JWT");
-      }
-
-      const siteId = args.siteId;
-      const sites = await usersDAL.findMySites(userId);
-
-      if (!sites.find(site => site.siteId === siteId)) {
-        throw new UserInputError("Invalid siteId");
-      }
-
-      return Boolean(await usersDAL.destroySite(userId, siteId));
-    },
-    async addSession(parent, args) {
-      const { siteId, language, userAgent, referrer } = args;
-      const user = await usersDAL.findSite(siteId);
-
-      if (!user) {
-        throw new UserInputError("Invalid siteId");
-      }
-
-      const data = {
-        siteId,
-        language,
-        userAgent,
-        referrer
-      };
-
-      return sessionsDAL.create(data);
-    }
+    signup,
+    login,
+    updateUser,
+    addSite,
+    destroySite,
+    addSession
   }
 };
 

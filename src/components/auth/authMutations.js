@@ -19,7 +19,8 @@ async function sendSignupCode(email) {
   util.mail.send(message);
 }
 
-async function signup(email) {
+async function signup(parent, args) {
+  const email = args.email;
   const user = await usersDAL.findByEmail(email);
 
   if (user) {
@@ -28,23 +29,24 @@ async function signup(email) {
     return user;
   }
 
-  const newUser = await usersDAL.create(email);
+  const newUser = await usersDAL.create({ email });
 
   sendSignupCode(newUser.email);
 
   return newUser;
 }
 
-async function login(email, password) {
+async function login(parent, args) {
+  const email = args.email;
+  const password = args.password;
   const loginCode = await cache.get(`temporary-signup-code:${email}`);
 
   if (password !== loginCode) {
     throw new AuthenticationError("Invalid password");
   }
 
-  await usersDAL.updateByEmail(email, { isVerified: true });
+  const user = await usersDAL.updateByEmail(email, { isVerified: true });
 
-  const user = await usersDAL.findByEmail(email);
   const payload = { id: user.id };
   const token = util.jwt.sign(payload);
   const response = {
@@ -54,6 +56,8 @@ async function login(email, password) {
 
   return response;
 }
+
+export { signup, login };
 
 export default {
   signup,

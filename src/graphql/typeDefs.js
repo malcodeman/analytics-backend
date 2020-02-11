@@ -47,7 +47,6 @@ const typeDefs = gql`
     findMyself: User
     findMySites: [Site]
     findAllSessions: [Session]
-    findSite(siteId: String): Site
     findDashboard(siteId: String): Dashboard
     findCharts(siteId: String, from: String, to: String): [Chart]
     findBrowsers(siteId: String, from: String, to: String): [UserAgentProp]
