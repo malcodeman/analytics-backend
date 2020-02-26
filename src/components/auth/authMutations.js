@@ -29,7 +29,7 @@ async function signup(parent, args) {
     return user;
   }
 
-  const newUser = await usersDAL.create({ email });
+  const newUser = await usersDAL.create(args);
 
   sendSignupCode(newUser.email);
 

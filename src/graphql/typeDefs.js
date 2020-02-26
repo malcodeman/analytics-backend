@@ -53,7 +53,12 @@ const typeDefs = gql`
     findOs(siteId: String, from: String, to: String): [UserAgentProp]
   }
   type Mutation {
-    signup(email: String): User
+    signup(
+      email: String
+      firstName: String
+      lastName: String
+      company: String
+    ): User
     login(email: String, password: String): Login
     updateUser(firstName: String, lastName: String, company: String): User
     addSite(name: String): Site
