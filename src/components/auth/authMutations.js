@@ -1,4 +1,4 @@
-import { AuthenticationError } from "apollo-server";
+import { AuthenticationError, ValidationError } from "apollo-server";
 
 import usersDAL from "../users/usersDAL";
 import util from "../../util";
@@ -17,6 +17,21 @@ async function sendSignupCode(email) {
   };
 
   util.mail.send(message);
+}
+
+async function sendTemporaryPassword(parent, args) {
+  const email = args.email;
+  const user = await usersDAL.findByEmail(email);
+
+  if (user) {
+    sendSignupCode(user.email);
+
+    return user;
+  }
+
+  throw new ValidationError(
+    "We could not reach the email address you provided. Please try again with a different email."
+  );
 }
 
 async function signup(parent, args) {
@@ -57,9 +72,10 @@ async function login(parent, args) {
   return response;
 }
 
-export { signup, login };
+export { signup, login, sendTemporaryPassword };
 
 export default {
   signup,
-  login
+  login,
+  sendTemporaryPassword
 };

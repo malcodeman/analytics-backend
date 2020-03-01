@@ -17,7 +17,11 @@ import {
   addSite,
   destroySite
 } from "../components/users/usersMutations";
-import { signup, login } from "../components/auth/authMutations";
+import {
+  signup,
+  login,
+  sendTemporaryPassword
+} from "../components/auth/authMutations";
 
 const resolvers = {
   Date,
@@ -34,6 +38,7 @@ const resolvers = {
   Mutation: {
     signup,
     login,
+    sendTemporaryPassword,
     updateUser,
     addSite,
     destroySite,

@@ -60,6 +60,7 @@ const typeDefs = gql`
       company: String
     ): User
     login(email: String, password: String): Login
+    sendTemporaryPassword(email: String): User
     updateUser(firstName: String, lastName: String, company: String): User
     addSite(name: String): Site
     destroySite(siteId: String): Boolean
