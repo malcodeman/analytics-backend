@@ -39,9 +39,7 @@ async function signup(parent, args) {
   const user = await usersDAL.findByEmail(email);
 
   if (user) {
-    sendSignupCode(user.email);
-
-    return user;
+    throw new ValidationError("Email has already been taken");
   }
 
   const newUser = await usersDAL.create(args);
