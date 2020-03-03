@@ -28,7 +28,15 @@ async function findMySites(parent, args, context) {
   }
 
   const user = await usersDAL.findById(userId);
-  const sites = user.sites;
+  const sites = user.sites.map(site => {
+    return {
+      ...site,
+      domain: "https://www.malcodeman.com/",
+      uniqueVisits: 3700,
+      pageViews: 7800,
+      bounceRate: 59
+    };
+  });
 
   return sites;
 }

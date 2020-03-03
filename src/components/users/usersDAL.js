@@ -19,7 +19,7 @@ export async function findByEmail(email) {
 }
 
 export async function findById(id) {
-  const user = await User.findById(id);
+  const user = await User.findById(id).lean();
 
   return user;
 }

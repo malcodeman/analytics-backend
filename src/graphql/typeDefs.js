@@ -16,9 +16,12 @@ const typeDefs = gql`
     user: User
   }
   type Site {
-    id: String
     name: String
     siteId: String
+    domain: String
+    uniqueVisits: Int
+    pageViews: Int
+    bounceRate: Int
   }
   type Session {
     id: String
