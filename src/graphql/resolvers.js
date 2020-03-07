@@ -10,6 +10,7 @@ import { addSession } from "../components/sessions/sessionsMutations";
 import {
   findAllUsers,
   findMySites,
+  findSite,
   findMyself
 } from "../components/users/usersQueries";
 import {
@@ -33,6 +34,7 @@ const resolvers = {
     findOs,
     findAllUsers,
     findMySites,
+    findSite,
     findMyself
   },
   Mutation: {

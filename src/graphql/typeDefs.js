@@ -49,6 +49,7 @@ const typeDefs = gql`
     findAllUsers: [User]
     findMyself: User
     findMySites: [Site]
+    findSite(siteId: String): Site
     findAllSessions: [Session]
     findDashboard(siteId: String): Dashboard
     findCharts(siteId: String, from: String, to: String): [Chart]
