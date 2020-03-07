@@ -28,9 +28,15 @@ async function addSite(parent, args, context) {
     throw new AuthenticationError("Invalid JWT");
   }
 
+  const domain = args.domain;
   const name = args.name;
   const siteId = await util.generateId();
-  const site = await usersDAL.addSite(userId, name, siteId);
+  const values = {
+    domain,
+    name,
+    siteId
+  };
+  const site = await usersDAL.addSite(userId, values);
 
   return site;
 }

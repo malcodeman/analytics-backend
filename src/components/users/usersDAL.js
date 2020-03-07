@@ -36,11 +36,11 @@ export async function updateById(id, values) {
   return user;
 }
 
-export async function addSite(id, name, siteId) {
+export async function addSite(id, values) {
   const user = await User.findByIdAndUpdate(
     id,
     {
-      $push: { sites: { name, siteId } }
+      $push: { sites: values }
     },
     { new: true }
   );

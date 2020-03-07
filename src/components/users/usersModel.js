@@ -22,6 +22,10 @@ const schema = new mongoose.Schema(
     },
     sites: [
       {
+        domain: {
+          type: String,
+          required: true
+        },
         name: {
           type: String,
           required: true
