@@ -22,6 +22,7 @@ const typeDefs = gql`
     uniqueVisits: Int
     pageViews: Int
     bounceRate: Int
+    avgDuration: Int
   }
   type Session {
     id: String

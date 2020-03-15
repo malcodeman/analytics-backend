@@ -1,6 +1,7 @@
 import { AuthenticationError } from "apollo-server";
 
 import usersDAL from "./usersDAL";
+import sessionsDAL from "../sessions/sessionsDAL";
 
 async function findAllUsers() {
   const users = await usersDAL.findAll();
@@ -28,16 +29,21 @@ async function findMySites(parent, args, context) {
   }
 
   const user = await usersDAL.findById(userId);
-  const sites = user.sites.map(site => {
+  const sites = user.sites.map(async site => {
+    const session = await sessionsDAL.aggregateTotals(
+      site.siteId,
+      null,
+      new Date()
+    );
+
     return {
       ...site,
-      uniqueVisits: 3700,
-      pageViews: 7800,
-      bounceRate: 59
+      ...session
     };
   });
+  const data = await Promise.all(sites);
 
-  return sites;
+  return data;
 }
 
 async function findSite(parent, args, context) {
