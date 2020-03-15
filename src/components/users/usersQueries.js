@@ -58,8 +58,17 @@ async function findSite(parent, args, context) {
   const site = user.sites.find(site => {
     return site.siteId === siteId;
   });
+  const totals = await sessionsDAL.aggregateTotals(
+    site.siteId,
+    null,
+    new Date()
+  );
+  const data = {
+    ...site,
+    ...totals
+  };
 
-  return site;
+  return data;
 }
 
 export { findAllUsers, findMyself, findMySites, findSite };

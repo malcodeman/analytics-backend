@@ -3,7 +3,6 @@ import {
   findAllSessions,
   findBrowsers,
   findCharts,
-  findDashboard,
   findOs,
   findTotals
 } from "../components/sessions/sessionsQueries";
@@ -31,7 +30,6 @@ const resolvers = {
     findAllSessions,
     findBrowsers,
     findCharts,
-    findDashboard,
     findOs,
     findAllUsers,
     findMySites,

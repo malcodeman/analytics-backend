@@ -32,12 +32,6 @@ const typeDefs = gql`
     referrer: String
     createdAt: Date
   }
-  type Dashboard {
-    siteId: String
-    pageViews: Int
-    referrers: [String]
-    languages: [String]
-  }
   type Chart {
     pageViews: String
     date: Date
@@ -58,7 +52,6 @@ const typeDefs = gql`
     findMySites: [Site]
     findSite(siteId: String): Site
     findAllSessions: [Session]
-    findDashboard(siteId: String): Dashboard
     findCharts(siteId: String, from: String, to: String): [Chart]
     findBrowsers(siteId: String, from: String, to: String): [UserAgentProp]
     findOs(siteId: String, from: String, to: String): [UserAgentProp]
