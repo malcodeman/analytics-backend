@@ -4,7 +4,8 @@ import {
   findBrowsers,
   findCharts,
   findDashboard,
-  findOs
+  findOs,
+  findTotals
 } from "../components/sessions/sessionsQueries";
 import { addSession } from "../components/sessions/sessionsMutations";
 import {
@@ -35,7 +36,8 @@ const resolvers = {
     findAllUsers,
     findMySites,
     findSite,
-    findMyself
+    findMyself,
+    findTotals
   },
   Mutation: {
     signup,

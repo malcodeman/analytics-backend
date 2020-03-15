@@ -1,4 +1,5 @@
 import Session from "./sessionsModel";
+import { getRandomInt } from "../../util";
 
 async function create(values) {
   return await Session.create(values);
@@ -94,13 +95,37 @@ async function aggregateOs(siteId, from, to) {
   return sessions;
 }
 
+async function aggregateTotals(siteId, from, to) {
+  const sessions = await Session.aggregate([
+    {
+      $match: {
+        siteId,
+        createdAt: {
+          $gte: new Date(from),
+          $lt: new Date(to)
+        }
+      }
+    },
+    { $group: { _id: null, pageViews: { $sum: 1 } } }
+  ]);
+  const totals = {
+    ...sessions[0],
+    uniqueVisits: getRandomInt(100),
+    avgDuration: getRandomInt(100),
+    bounceRate: getRandomInt(100)
+  };
+
+  return totals;
+}
+
 export {
   create,
   findAll,
   findBySiteId,
   aggregatePageViews,
   aggregateBrowsers,
-  aggregateOs
+  aggregateOs,
+  aggregateTotals
 };
 
 export default {
@@ -109,5 +134,6 @@ export default {
   findBySiteId,
   aggregatePageViews,
   aggregateBrowsers,
-  aggregateOs
+  aggregateOs,
+  aggregateTotals
 };

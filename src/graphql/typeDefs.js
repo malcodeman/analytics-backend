@@ -45,6 +45,12 @@ const typeDefs = gql`
     label: String
     total: Int
   }
+  type Totals {
+    pageViews: Int
+    uniqueVisits: Int
+    avgDuration: Int
+    bounceRate: Int
+  }
   type Query {
     findAllUsers: [User]
     findMyself: User
@@ -55,6 +61,7 @@ const typeDefs = gql`
     findCharts(siteId: String, from: String, to: String): [Chart]
     findBrowsers(siteId: String, from: String, to: String): [UserAgentProp]
     findOs(siteId: String, from: String, to: String): [UserAgentProp]
+    findTotals(siteId: String, from: String, to: String): Totals
   }
   type Mutation {
     signup(

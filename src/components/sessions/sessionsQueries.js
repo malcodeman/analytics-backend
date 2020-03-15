@@ -74,12 +74,28 @@ async function findOs(parent, args, context) {
   return sessions;
 }
 
-export { findAllSessions, findDashboard, findCharts, findBrowsers, findOs };
+async function findTotals(parent, args, context) {
+  const userId = context.user.id;
+
+  if (!userId) {
+    throw new AuthenticationError("Invalid JWT");
+  }
+
+  const siteId = args.siteId;
+  const from = args.from;
+  const to = args.to;
+  const sessions = await sessionsDAL.aggregateTotals(siteId, from, to);
+
+  return sessions;
+}
+
+export { findAllSessions, findDashboard, findCharts, findBrowsers, findOs,findTotals };
 
 export default {
   findAllSessions,
   findDashboard,
   findCharts,
   findBrowsers,
-  findOs
+  findOs,
+  findTotals
 };
