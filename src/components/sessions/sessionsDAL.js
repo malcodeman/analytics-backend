@@ -109,7 +109,7 @@ async function aggregateTotals(siteId, from, to) {
     { $group: { _id: null, pageViews: { $sum: 1 } } }
   ]);
   const totals = {
-    ...sessions[0],
+    pageViews: (sessions.length && sessions[0].pageViews) || 0,
     uniqueVisits: getRandomInt(100),
     avgDuration: getRandomInt(100),
     bounceRate: getRandomInt(100)
