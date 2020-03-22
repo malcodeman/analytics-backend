@@ -58,6 +58,15 @@ export async function destroySite(id, siteId) {
   return site;
 }
 
+export async function updateSiteName(id, siteId, name) {
+  const update = { $set: { "sites.$[elem].name": name } };
+  const options = { new: true, arrayFilters: [{ "elem.siteId": siteId }] };
+  const user = await User.findByIdAndUpdate(id, update, options);
+  const site = user.sites.find(site => site.siteId === siteId);
+
+  return site;
+}
+
 export default {
   create,
   findAll,
@@ -66,5 +75,6 @@ export default {
   updateByEmail,
   updateById,
   destroySite,
-  addSite
+  addSite,
+  updateSiteName
 };

@@ -54,10 +54,25 @@ async function destroySite(parent, args, context) {
   return Boolean(site);
 }
 
-export { updateUser, addSite, destroySite };
+async function updateSiteName(parent, args, context) {
+  const userId = context.user.id;
+
+  if (!userId) {
+    throw new AuthenticationError("Invalid JWT");
+  }
+
+  const siteId = args.siteId;
+  const name = args.name;
+  const site = await usersDAL.updateSiteName(userId, siteId, name);
+
+  return site;
+}
+
+export { updateUser, addSite, destroySite, updateSiteName };
 
 export default {
   updateUser,
   addSite,
-  destroySite
+  destroySite,
+  updateSiteName
 };

@@ -69,6 +69,7 @@ const typeDefs = gql`
     updateUser(firstName: String, lastName: String, company: String): User
     addSite(domain: String, name: String): Site
     destroySite(siteId: String): Boolean
+    updateSiteName(siteId: String, name: String): Site
     addSession(
       siteId: String
       language: String

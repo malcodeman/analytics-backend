@@ -16,7 +16,8 @@ import {
 import {
   updateUser,
   addSite,
-  destroySite
+  destroySite,
+  updateSiteName
 } from "../components/users/usersMutations";
 import {
   signup,
@@ -44,6 +45,7 @@ const resolvers = {
     updateUser,
     addSite,
     destroySite,
+    updateSiteName,
     addSession
   }
 };
