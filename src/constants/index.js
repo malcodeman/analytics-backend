@@ -3,7 +3,8 @@ const {
   PORT,
   SENDGRID_API_KEY,
   PRIVATE_KEY,
-  MONGODB_URI
+  MONGODB_URI,
+  MASTER_LOGIN_CODE,
 } = process.env;
 const EXPIRES_IN = "30 days";
 
@@ -13,5 +14,6 @@ export default {
   SENDGRID_API_KEY,
   PRIVATE_KEY,
   EXPIRES_IN,
-  MONGODB_URI
+  MONGODB_URI,
+  MASTER_LOGIN_CODE,
 };

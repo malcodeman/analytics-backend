@@ -14,6 +14,7 @@ PRIVATE_KEY=key
 NODE_ENV=development
 SENDGRID_API_KEY=key
 MONGODB_URI=uri
+MASTER_LOGIN_CODE=code
 ```
 
 ```
@@ -25,4 +26,5 @@ Database commands:
 
 ```
 yarn run db:drop
+yarn run db:seed
 ```

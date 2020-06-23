@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-import User from "../components/users/usersModel";
-import logger from "../util/logger";
-import constants from "../constants";
+import User from "../src/components/users/usersModel";
+import logger from "../src/util/logger";
+import constants from "../src/constants";
 
 async function drop() {
   try {
     await mongoose.connect(constants.MONGODB_URI, {
-      useNewUrlParser: true
+      useNewUrlParser: true,
     });
 
     const count = await User.countDocuments({});

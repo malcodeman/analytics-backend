@@ -7,7 +7,8 @@
   "scripts": {
     "start": "nodemon --require dotenv/config -r esm src/server.js",
     "start-redis": "redis-server",
-    "db:drop": "node --require dotenv/config -r esm src/cli/drop",
+    "db:drop": "node --require dotenv/config -r esm cli/drop",
+    "db:seed": "node --require dotenv/config -r esm cli/seed",
     "lint": "eslint src/**"
   },
   "dependencies": {
