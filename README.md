@@ -28,3 +28,7 @@ Database commands:
 yarn run db:drop
 yarn run db:seed
 ```
+
+## License
+
+[MIT](./LICENSE)
